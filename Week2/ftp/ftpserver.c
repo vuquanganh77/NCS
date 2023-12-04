@@ -43,9 +43,9 @@ int main(int argc, char *argv[]){
 
 	// clean buffer
 	memset(&serv_addr, 0, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;			// socket in family (IPV4);
-	serv_addr.sin_addr.s_addr = INADDR_ANY; // any IP
-	serv_addr.sin_port = htons(portno);		// host to network short (and pass port)
+	serv_addr.sin_family = AF_INET;			
+	serv_addr.sin_addr.s_addr = INADDR_ANY; 
+	serv_addr.sin_port = htons(portno);	
 
 	if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 		syserr("can't bind");
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 		// newsockfd picks up that specific phone call:
 		newsockfd = accept(sockfd, (struct sockaddr *)&clt_addr, &addrlen);
 
-		if (newsockfd < 0) // newsock is for that specific socket
+		if (newsockfd < 0) 
 			syserr("can't accept");
 
 		// client IP
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
 		if (pID == 0) // child process:
 		{
 			printf("Handler assigned for client %s\n", clAddr);
-			close(sockfd); // close the general (recepcionist) socket
+			close(sockfd); 
 
 			// each fork requires its own buffer so that multiple clients don't read each others' info.
 			int b;
@@ -248,9 +248,8 @@ int main(int argc, char *argv[]){
 					// clean buffers
 					memset(&msgBuffer, 0, sizeof(msgBuffer));
 					memset(&byteArray, 0, sizeof(byteArray));
-				} // end 'get'
+				}
 				// user calls 'put file'
-				// Receive file from user! (upload)
 				else if (msgBuffer[0] == 'p' &&
 						 msgBuffer[1] == 'u' &&
 						 msgBuffer[2] == 't' &&
@@ -263,19 +262,19 @@ int main(int argc, char *argv[]){
 					if (b < 0)
 						printf("Error sending file ACK\n");
 
-					// we receive on the fileSizeBuffer
+					// receive on the fileSizeBuffer
 					memset(&fileSizeBuffer, 0, sizeof(fileSizeBuffer));
 					b = recv(newsockfd, fileSizeBuffer, sizeof(fileSizeBuffer), 0);
 					if (b < 0)
 						printf("Error receiving file size\n");
 					printf("size should be: %s\n", fileSizeBuffer);
 
-					// we send an ACK for file size
+					// send an ACK for file size
 					b = send(newsockfd, fileSizeBuffer, sizeof(fileSizeBuffer), 0);
 					if (b < 0)
 						printf("Error sending ACK for file size\n");
 
-					// we catch the file name
+					// catch the file name
 					char fileName[256];
 					memset(&fileName, 0, sizeof(fileName));
 
@@ -337,9 +336,9 @@ int main(int argc, char *argv[]){
 
 				// clean buffer
 				memset(&msgBuffer, 0, sizeof(msgBuffer));
-			} while (strcmp(msgBuffer, "exit") != 0); // close while loop here
+			} while (strcmp(msgBuffer, "exit") != 0); 
 		}
-		else				  // parent process:
+		else			
 			close(newsockfd); // close specific socket
 	}						 
 	close(sockfd);			 
