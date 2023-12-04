@@ -18,7 +18,6 @@ void syserr(char *msg){
 }
 
 int main(int argc, char *argv[]){
-	// set up variables
 	int sockfd, newsockfd, portno, fp, fileSize; 
 	struct sockaddr_in serv_addr, clt_addr;
 	socklen_t addrlen;
@@ -92,7 +91,7 @@ int main(int argc, char *argv[]){
 				// read client message:
 				printf("new incoming connection, block on receive\n");
 
-				// we receive on specific socket:
+				// receive on specific socket:
 				b = recv(newsockfd, msgBuffer, sizeof(msgBuffer), 0);
 
 				// server blocks on receive (waiting)
@@ -150,10 +149,10 @@ int main(int argc, char *argv[]){
 								}
 							}
 						}
-						// we only send after we catch all files
+						//send after we catch all files
 						b = send(newsockfd, msgBuffer, sizeof(msgBuffer), 0);
 
-						// rewind!
+					
 						rewinddir(dir);
 					}
 					else // could not open directory
@@ -162,7 +161,7 @@ int main(int argc, char *argv[]){
 					}
 				}
 				// user calls 'get file' (download)
-				// Send user a file!
+				// Send user a file
 				else if (msgBuffer[0] == 'g' &&
 						 msgBuffer[1] == 'e' &&
 						 msgBuffer[2] == 't' &&
@@ -209,8 +208,6 @@ int main(int argc, char *argv[]){
 						printf("Error sending file size.\n");
 
 					// receive an ACK from client;
-					// give enough time for client to get
-					// the file size we just sent:
 					b = recv(newsockfd, fileSizeBuffer, sizeof(fileSizeBuffer), 0);
 					if (b < 0)
 						printf("Error receiving handshake");
@@ -237,7 +234,6 @@ int main(int argc, char *argv[]){
 
 							printf("sent %d slab\n", buffRead);
 						}
-						// with a slabs of 256 bytes:
 						else
 						{
 							buffRead = fread(byteArray, 1, 256, fp);
@@ -262,7 +258,7 @@ int main(int argc, char *argv[]){
 				{
 					printf("User called put\n");
 
-					// we immediately acknowledge the client we got the file name
+					// acknowledge the client we got the file name
 					b = send(newsockfd, msgBuffer, sizeof(msgBuffer), 0);
 					if (b < 0)
 						printf("Error sending file ACK\n");
@@ -330,14 +326,14 @@ int main(int argc, char *argv[]){
 					b = recv(newsockfd, msgBuffer, 256, 0); // receive bizarre lingering packet.
 					// clean buffer
 					memset(&msgBuffer, 0, sizeof(msgBuffer));
-				} // end upload section
+				} 
 				else
 				{
 					b = send(newsockfd, msgBuffer, sizeof(msgBuffer), 0);
 					if (b < 0)
 						syserr("can't send to server");
 					printf("send message...%s\n", msgBuffer);
-				} // close switch
+				} 
 
 				// clean buffer
 				memset(&msgBuffer, 0, sizeof(msgBuffer));
