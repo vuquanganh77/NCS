@@ -174,19 +174,14 @@ int main(int argc, char* argv[])
 		  rewind(fp);
 		  printf("File size: %lu bytes\n", file_size);
 		  
-		  //pass this size to a buffer in order to send it:
-                  //no need for host to network long, we're passing char array
 		  memset(&fileSizeBuffer, 0, sizeof(fileSizeBuffer));
 		  sprintf(fileSizeBuffer, "%d", file_size);
-		  //memset(&buffer, 0, sizeof(buffer));
 		  //send file size:
 		  n = send(sockfd, fileSizeBuffer, sizeof(fileSizeBuffer), 0);
 		  if(n < 0)
 			  printf("Error sending file size information\n"); 
 		  
 		  //receive ACK for file size:
-                  //give enough time for server to get
-                  //file size we just sent
                   n = recv(sockfd, fileSizeBuffer, sizeof(fileSizeBuffer), 0);
                   if(n < 0)
                           printf("Error receiving handshake");
@@ -213,7 +208,7 @@ int main(int argc, char* argv[])
 
                            printf("sent %d slab\n", buffRead);
                        }
-                       //for slabs of 256 bytes:
+                       
                        else
                        {
                            buffRead = fread(byteArray, 1, 256, fp);
@@ -245,8 +240,6 @@ int main(int argc, char* argv[])
 					printf("\n%s", directory->d_name);
 			}
 			printf("\n");
-
-		  	//rewind
 		  	rewinddir(dir);
 		  }
 		  else
@@ -279,9 +272,6 @@ int main(int argc, char* argv[])
 	  }
 	  else // user sent a normal message
 	  {	  
-		  //echo (receive)
-		  //n = recv(sockfd, buffer, sizeof(buffer), 0);
-		  //memset(&buffer, 0, sizeof(buffer));
 		  n = recv(sockfd, buffer, sizeof(buffer), 0);
   
 		  if(n < 0) //couldn't receive 
@@ -294,7 +284,7 @@ int main(int argc, char* argv[])
 		  //clean buffer
 		  memset(&buffer, 0, sizeof(buffer));
 	  }
-	  //clean buffer here maybe
+
 	  memset(&buffer, 0, sizeof(buffer));
   } while(strcmp(buffer, "exit") != 0);
   
