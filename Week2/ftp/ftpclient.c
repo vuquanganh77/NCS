@@ -36,12 +36,11 @@ int main(int argc, char* argv[])
   }
   portno = atoi(argv[2]);
 
-  //socket file descriptor
+
   sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
   if(sockfd < 0) syserr("can't open socket");
   printf("create socket...\n");
 
-  //once socket is created:
   memset(&serv_addr, 0, sizeof(serv_addr));
   serv_addr.sin_family = AF_INET; //IPV4
   serv_addr.sin_addr = *((struct in_addr*)server->h_addr);
@@ -230,7 +229,7 @@ int main(int argc, char* argv[])
 		  memset(&buffer, 0, sizeof(buffer));
 		  printf("running ls-local function:");
 
-		  if(dir)//if directory successfully opens
+		  if(dir)
 		  {
 		  	while((directory = readdir(dir)) != NULL)//while in dir.
 			{
@@ -247,7 +246,7 @@ int main(int argc, char* argv[])
 
 		  n = recv(sockfd, buffer, sizeof(buffer), 0);
 
-		  if(n < 0) //couldn't receive
+		  if(n < 0) 
 			  syserr("can't receive from server");
 
 		  //clean buffer
