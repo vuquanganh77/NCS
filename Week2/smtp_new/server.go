@@ -24,7 +24,7 @@ func sendOnlineClients(conn net.Conn) {
 	}
 
 	clientList := strings.Join(onlineClients, ", ")
-	conn.Write([]byte("Online clients: " + clientList + "\n"))
+	conn.Write([]byte("Invalid mail lists: " + clientList + "\n"))
 }
 
 func main() {
