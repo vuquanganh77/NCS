@@ -1,5 +1,5 @@
-Mail from   -----  mail nguoi gui /n
-rcpt to     -----  mail nguoi nhan /n
-data        -----  noi dung mail /n
-attachment  -----  tep dinh kem /n
-exit        -----  thoat /n
+Mail from   -----  mail nguoi gui <br>
+rcpt to     -----  mail nguoi nhan <br>
+data        -----  noi dung mail <br>
+attachment  -----  tep dinh kem <br>
+exit        -----  thoat <br>
