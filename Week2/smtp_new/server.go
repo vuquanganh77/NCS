@@ -92,7 +92,7 @@ func handleSelectClient(sender, selectedClient string, conn net.Conn) {
 	// Check client co ton tai hay khong
 	selectedConn, ok := clients[selectedClient]
 	if !ok {
-		conn.Write([]byte("Client " + selectedClient + " is not online.\n"))
+		conn.Write([]byte("Mail " + selectedClient + " is invalid.\n"))
 		return
 	}
 
