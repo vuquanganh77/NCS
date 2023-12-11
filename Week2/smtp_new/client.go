@@ -10,10 +10,6 @@ import (
 )
 
 func isValidEmail(email string) bool {
-	// Use a regular expression to check for a valid email format
-	// This is a simple example and may not cover all edge cases
-	// You might want to use a more comprehensive email validation regex
-	// or a dedicated email validation library.
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 	return emailRegex.MatchString(email)
 }
